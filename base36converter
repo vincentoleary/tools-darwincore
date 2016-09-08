@@ -1,0 +1,56 @@
+/* This script is copied from the IGSN ID assigment script and can be used to convert any number from 46656-1679615 in base 10 to base32 (1000-ZZZZ). A wider range of digits can be achieved using more or less sections for digits.
+This script is for FileMaker 12.0 and does NOT require any custom scripts or special functions beyond a default installation. It require input from a field (BASE10 in this example) and will convert that number to base32 via calculation automatically in a new field. */
+
+If( 
+  Int(
+    ( ( ( ( BASE10 - Mod ( BASE10 ; 36 ) ) / 36 ) - Mod ( ( BASE10 - Mod ( BASE10 ; 36 ) ) / 36 ; 36 ) ) / 36 ) / 36
+  ) = 0;
+  0;
+  GetValue( "1¶2¶3¶4¶5¶6¶7¶8¶9¶A¶B¶C¶D¶E¶F¶G¶H¶I¶J¶K¶L¶M¶N¶O¶P¶Q¶R¶S¶T¶U¶V¶W¶X¶Y¶Z"; 
+    Int(
+      ( ( ( ( BASE10 - Mod ( BASE10 ; 36 ) ) / 36 ) - Mod ( ( BASE10 - Mod ( BASE10 ; 36 ) ) / 36 ; 36 ) ) / 36 ) / 36
+    )
+  )
+)
+
+&
+
+If( 
+  Mod(
+    ( ( ( ${(HIDDEN) Record ID} - Mod ( ${(HIDDEN) Record ID} ; 36 ) ) / 36 ) - Mod ( ( ${(HIDDEN) Record ID} - Mod ( ${(HIDDEN) Record ID} ; 36 ) ) / 36 ; 36 ) ) / 36 ; 36
+  ) = 0; 
+  0;
+  GetValue( "1¶2¶3¶4¶5¶6¶7¶8¶9¶A¶B¶C¶D¶E¶F¶G¶H¶I¶J¶K¶L¶M¶N¶O¶P¶Q¶R¶S¶T¶U¶V¶W¶X¶Y¶Z"; 
+    Mod(
+      ( ( ( ${(HIDDEN) Record ID} - Mod ( ${(HIDDEN) Record ID} ; 36 ) ) / 36 ) - Mod ( ( ${(HIDDEN) Record ID} - Mod ( ${(HIDDEN) Record ID} ; 36 ) ) / 36 ; 36 ) ) / 36 ; 36
+    )
+  )
+)
+
+&
+
+If( 
+  Mod(
+    ( ${(HIDDEN) Record ID} - Mod ( ${(HIDDEN) Record ID} ; 36 )) / 36 ; 36
+  ) = 0; 
+  0; 
+  GetValue( "1¶2¶3¶4¶5¶6¶7¶8¶9¶A¶B¶C¶D¶E¶F¶G¶H¶I¶J¶K¶L¶M¶N¶O¶P¶Q¶R¶S¶T¶U¶V¶W¶X¶Y¶Z";
+    Mod(
+      ( ${(HIDDEN) Record ID} - Mod ( ${(HIDDEN) Record ID} ; 36 )) / 36 ; 36
+    )
+  )
+)
+
+&
+
+If( 
+  Mod(
+    ${(HIDDEN) Record ID} ; 36
+  ) = 0; 
+  0; 
+  GetValue( "1¶2¶3¶4¶5¶6¶7¶8¶9¶A¶B¶C¶D¶E¶F¶G¶H¶I¶J¶K¶L¶M¶N¶O¶P¶Q¶R¶S¶T¶U¶V¶W¶X¶Y¶Z";
+    Mod(
+      ${(HIDDEN) Record ID} ; 36
+    )
+  )
+)
