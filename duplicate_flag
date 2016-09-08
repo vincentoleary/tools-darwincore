@@ -1,0 +1,7 @@
+/* This script requires a field that searches for duplicate IDs and marks the record. Then a separate script can search on the flags and display duplicates automatically.
+This is more powerful than the built in search functions because it displays the orignal and the duplicate instead of just the duplicate */
+
+If ( Count (Validate::ID_FIELD) > 1; "Duplicates" ; "" )
+
+/* Then run a script to show records flagged as Duplicate in the hidden field */
+
