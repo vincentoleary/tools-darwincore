@@ -1,41 +1,39 @@
 /* This is simple calculation I wrote to convert coordinates from degrees to decimal in FileMaker 12.0. For my use data had been entered into a column as DD°MM'SS"N, DD°MM'SS"W (ie. 67°02'34"S, 07°32'29"E) and needed to be converted to two new fields as decimal longitude and decimal latitude. Change the field names below to match your dataset and always check for errors. Inspired by https://stackoverflow.com/questions/13946159/filemaker-calculation-to-convert-dms-latlong-to-decimal-format?rq=1 */
 
 /*Convert to Latitude */
-If( IsEmpty( COORDINATES-FIELD-HERE); ""; 
-	LeftValues( 
-		Evaluate( "Round( (" & 
-			Substitute( COORDINATES-FIELD-HERE;
-			  [" ";""];
-			  ["°";" + "];
-			  ["'";"/60 + "];
-			  ["\"";"/3600"];
-			  ["S";") -1*"];
-			  ["W";") -1*"];
-			  ["N";")"];
-			  ["E";")"];
-			  [","; " ; 6 ) & \", \" & Round( ("]
-			)
-		& " ; 6 )"
-		)
-	; 1)
+LeftWords( 
+	Evaluate( 
+  	"Round(  (" &
+  		Substitute( coordinates; 
+    		[" ";""]; 
+    		["°";" + "]; 
+    		["'";"/60 + "]; 
+    		["\"";"/3600"]; 
+    		["S";") *-1"]; 
+    		["W";") *-1"]; 
+		["N";")"]; 
+    		["E";")"]; 
+    		[","; " ; 6 ) & \", \" & Round( ("]
+  		) & 
+  	" ; 6 )"
+	); 1
 )
 
 /*Convert to Longitue */
-If( IsEmpty( COORDINATES-FIELD-HERE) ; ""; 
-	RightValues(
-		Evaluate( "Round( (" & 
-			Substitute( COORDINATES-FIELD-HERE;
-				[" ";""];
-				["°";" + "];
-				["’";"/60 + "];
-				["\”";"/3600"];
-				["S";") *-1"];
-				["W";") *-1"];
-				["N";")"];
-				["E";")"];
-				[","; " ; 4 ) & \",  \" & Round( ("]
-			)
-		& " ; 4 )"
-		)
-	; 1)
+RightWords(
+	Evaluate( 
+  	"Round(  (" &
+		 Substitute( coordinates; 
+	    	[" ";""]; 
+	    	["°";" + "]; 
+	    	["'";"/60 + "]; 
+	    	["\"";"/3600"]; 
+	    	["S";") *-1"]; 
+	    	["W";") *-1"]; 
+	    	["N";")"]; 
+	    	["E";")"]; 
+	    	[","; " ; 6 ) & \", \" & Round( ("]
+	  	) & 
+  	" ; 6 )"
+	); 1
 )
